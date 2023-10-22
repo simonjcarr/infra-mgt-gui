@@ -1,4 +1,4 @@
-
+import { useProjectStore } from 'stores/projectStore'
 export default async ({ app, router, store }) => {
   console.log('websocket boot file')
   let ws
@@ -10,10 +10,33 @@ export default async ({ app, router, store }) => {
     console.log(e)
   })
   ws.addEventListener('message', (e) => {
-    const message = JSON.parse(e)
+    const message = JSON.parse(e.data)
     const operation = message.operationType
+    console.log(operation)
     const data = message.data
-    console.log(data)
+    const collection = message.collection
+    switch (collection) {
+      case "project":
+        const projectStore = useProjectStore()
+        switch (operation) {
+          case "insert":
+            projectStore.addProject(data)
+            break;
+          case "delete":
+            projectStore.removeProject(data)
+            break;
+          case "update":
+            projectStore.updateProject(data)
+            break;
+          default:
+            break;
+        }
+        break;
+    
+      default:
+        break;
+    }
+
   })
   ws.addEventListener('open', (e) => {
     ws.send('Hello Server!')
