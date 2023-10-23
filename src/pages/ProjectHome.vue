@@ -33,10 +33,10 @@
     </div>
   </div>
   <div class="row q-mt-md">
-    <div class="col-3">
+    <div class="col-6">
       <ProjectUsers />
     </div>
-    <div class="col-3">
+    <div class="col-6">
       <ProjectAdminUsers />
     </div>
   </div>
