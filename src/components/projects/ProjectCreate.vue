@@ -1,6 +1,12 @@
 <!-- eslint-disable vue/no-v-text-v-html-on-component -->
 <template lang="">
-  <q-btn color="primary" icon="add" label="New Project" size="sm" @click="showFormClick" />
+  <q-btn
+    color="primary"
+    icon="add"
+    label="New Project"
+    size="sm"
+    @click="showFormClick"
+  />
   <q-dialog v-model="showForm">
     <q-card style="min-width: 500px">
       <q-card-section class="row items-center q-pb-none">
@@ -10,16 +16,13 @@
       </q-card-section>
 
       <q-card-section>
-        <q-form
-          @submit.prevent="handleFormSubmit"
-          class="q-gutter-md"
-        >
+        <q-form @submit.prevent="handleFormSubmit" class="q-gutter-md">
           <div>
             <q-input
               v-model="form.name"
               label="Name"
               lazy-rules
-              :rules="[val => !!val || 'Required']"
+              :rules="[(val) => !!val || 'Required']"
             />
           </div>
           <div>
@@ -36,7 +39,7 @@
               label="CPU Allocation"
               lazy-rules
               type="number"
-              :rules="[val => !!val || 'Required']"
+              :rules="[(val) => !!val || 'Required']"
             />
           </div>
           <div>
@@ -45,7 +48,7 @@
               label="RAM Allocation"
               lazy-rules
               type="number"
-              :rules="[val => !!val || 'Required']"
+              :rules="[(val) => !!val || 'Required']"
             />
           </div>
           <div>
@@ -54,8 +57,7 @@
               label="Disk Allocation"
               lazy-rules
               type="number"
-
-              :rules="[val => val >= 0 || 'Must be greater than 0']"
+              :rules="[(val) => val >= 0 || 'Must be greater than 0']"
             />
           </div>
           <div>
@@ -64,24 +66,56 @@
               label="Users"
               multiple
               :options="users"
-              :option-value="val => val._id"
+              :option-value="(val) => val._id"
               option-label="name"
-              :rules="[val => !!val || 'Required']"
+              :rules="[(val) => !!val || 'Required']"
             >
-            <template v-slot:option="{ itemProps, opt, selected, toggleOption }">
-          <q-item v-bind="itemProps">
-            <q-item-section>
-              <q-item-label v-html="opt.name" />
-            </q-item-section>
-            <q-item-section side>
-              <q-toggle :model-value="selected" @update:model-value="toggleOption(opt)" />
-            </q-item-section>
-          </q-item>
-        </template>
+              <template
+                v-slot:option="{ itemProps, opt, selected, toggleOption }"
+              >
+                <q-item v-bind="itemProps">
+                  <q-item-section>
+                    <q-item-label v-html="opt.name" />
+                  </q-item-section>
+                  <q-item-section side>
+                    <q-toggle
+                      :model-value="selected"
+                      @update:model-value="toggleOption(opt)"
+                    />
+                  </q-item-section>
+                </q-item>
+              </template>
             </q-select>
           </div>
           <div>
-            <q-btn label="Create" type="submit" color="primary"/>
+            <q-select
+              v-model="form.adminUsers"
+              label="Admin Users"
+              multiple
+              :options="users"
+              :option-value="(val) => val._id"
+              option-label="name"
+              :rules="[(val) => !!val || 'Required']"
+            >
+              <template
+                v-slot:option="{ itemProps, opt, selected, toggleOption }"
+              >
+                <q-item v-bind="itemProps">
+                  <q-item-section>
+                    <q-item-label v-html="opt.name" />
+                  </q-item-section>
+                  <q-item-section side>
+                    <q-toggle
+                      :model-value="selected"
+                      @update:model-value="toggleOption(opt)"
+                    />
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
+          <div>
+            <q-btn label="Create" type="submit" color="primary" />
           </div>
         </q-form>
       </q-card-section>
@@ -97,16 +131,17 @@ export default {
   setup() {
     const userStore = useUserStore();
     const { users } = storeToRefs(userStore);
-    let showForm = ref()
+    let showForm = ref();
     let form = ref({
-        name: "",
-        description: "",
-        maxCpu: 0,
-        maxRam: 0,
-        maxDisk: 0,
-        users: [],
-        adminUsers: []
-      })
+      name: "",
+      description: "",
+      maxCpu: 0,
+      maxRam: 0,
+      maxDisk: 0,
+      users: [],
+      adminUsers: [],
+    });
+
     const handleFormSubmit = () => {
       const projectStore = useProjectStore();
       projectStore.storeProject(form.value);
@@ -116,23 +151,12 @@ export default {
       users,
       handleFormSubmit,
       showForm,
-      form
-    }
+      form,
+    };
   },
   name: "ProjectCreate",
   data() {
-    return {
-      // showForm: false,
-      // form: {
-      //   name: "",
-      //   description: "",
-      //   maxCpu: 0,
-      //   maxRam: 0,
-      //   maxDisk: 0,
-      //   users: [],
-      //   adminUsers: []
-      // },
-    };
+    return {};
   },
   methods: {
     showFormClick() {
