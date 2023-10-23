@@ -36,6 +36,9 @@
     <div class="col-3">
       <ProjectUsers />
     </div>
+    <div class="col-3">
+      <ProjectAdminUsers />
+    </div>
   </div>
 </template>
 <script>
@@ -43,6 +46,7 @@ import CPUUsage from '../components/virtualMachines/widgets/CPUUsage.vue'
 import RAMUsage from '../components/virtualMachines/widgets/RAMUsage.vue'
 import DiskUsage from '../components/virtualMachines/widgets/DiskUsage.vue'
 import ProjectUsers from '../components/projects/users/ProjectUsers.vue'
+import ProjectAdminUsers from 'src/components/projects/users/ProjectAdminUsers.vue'
 import { ref } from 'vue'
 import { useProjectStore } from 'src/stores/projectStore'
 import { storeToRefs } from 'pinia'
@@ -67,7 +71,7 @@ export default {
       showProjectNameInput,
       activeProject,
       onProjectNameReset,
-      onProjectNameSubmit
+      onProjectNameSubmit,
     }
   },
   mounted() {
@@ -77,7 +81,8 @@ export default {
     CPUUsage,
     RAMUsage,
     DiskUsage,
-    ProjectUsers
+    ProjectUsers,
+    ProjectAdminUsers
   }
 }
 </script>
