@@ -4,9 +4,14 @@
       <div class="row">
         <div class="col-6">
           <ProjectList />
+          <div class="flex">
+            <q-btn color="primary" class="q-mt-xs" size="sm" icon="add" label="New Project" />
+            <q-btn v-if="activeProjectId" color="primary" class="q-mt-xs q-ml-xs" size="sm" icon="dashboard" label="Project Dashboard" @click="projectDashboardClick" />
+          </div>
         </div>
         <div class="col-6">
-          <VirtualMachineList />
+        <VirtualMachineList />
+          <q-btn color="primary" class="q-mt-xs" size="sm" icon="add" label="New VM" />
         </div>
       </div>
     </div>
@@ -15,7 +20,8 @@
 
 <script>
 
-
+import { useProjectStore } from '../stores/projectStore'
+import { storeToRefs } from 'pinia'
 import { defineComponent } from 'vue'
 import ProjectList from '../components/projects/ProjectList.vue'
 import VirtualMachineList from '../components/virtualMachines/VirtualMachineList.vue'
@@ -24,6 +30,22 @@ export default defineComponent({
   components: {
     ProjectList,
     VirtualMachineList
+  },
+  setup() {
+    const store = useProjectStore()
+    const { activeProjectId, getActiveProject } = storeToRefs(store)
+
+    return {
+      activeProjectId,
+      getActiveProject
+    }
+  },
+  methods: {
+    projectDashboardClick() {
+      this.$router.push('/project')
+    }
   }
+  
+  
 })
 </script>

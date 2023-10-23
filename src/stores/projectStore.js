@@ -4,9 +4,19 @@ export const useProjectStore = defineStore('project', {
   state: () => ({
     userProjects: [],
     allProjects: [],
-    activeProjectId: null
+    activeProjectId: null,
+    maxCpu: 20,
+    maxRam: 128,
+    maxDisk: 5000,
+    usedCpu: 9,
+    usedRam: 32,
+    usedDisk: 2890,
   }),
-
+  getters: {
+    getActiveProject () {
+      return this.userProjects.find(p => p._id === this.activeProjectId)
+    }
+  },
   actions: {
     async getProjects () {
       fetch('http://localhost:3000/project').then(response => {

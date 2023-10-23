@@ -34,7 +34,7 @@ export default {
   },
   setup() {
     const store = useProjectStore()
-    const { userProjects, activeProjectId } = storeToRefs(store)
+    const { userProjects, activeProjectId, getActiveProject } = storeToRefs(store)
 
     const setActiveProject = (projectId) => {
       store.setActiveProject(projectId)
@@ -45,7 +45,8 @@ export default {
     return {
       userProjects,
       activeProjectId,
-      setActiveProject
+      setActiveProject,
+      getActiveProject
     }
   }
 

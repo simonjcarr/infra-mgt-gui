@@ -12,7 +12,8 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Infrastructure Manager
+          <span v-if="activeProjectId"> - Active Project: {{ getActiveProject.name }}</span>
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -48,32 +49,35 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-
+import { useProjectStore } from '../stores/projectStore'
+import { storeToRefs } from 'pinia'
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Home',
+    caption: 'Main Dashboard',
+    icon: 'home',
+    link: '/'
   },
 ]
 
 export default defineComponent({
   name: 'MainLayout',
-
   components: {
     EssentialLink
   },
 
   setup () {
     const leftDrawerOpen = ref(false)
-    
+    const store = useProjectStore()
+    const { activeProjectId, getActiveProject } = storeToRefs(store)
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
+      activeProjectId,
+      getActiveProject
     }
   }
 })

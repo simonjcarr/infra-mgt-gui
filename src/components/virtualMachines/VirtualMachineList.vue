@@ -1,5 +1,5 @@
 <template lang="">
-  <q-list bordered class="rounded-borders" style="max-width: 450px">
+  <q-list bordered class="rounded-borders" style="max-width: 450px; min-height: 200px">
       <q-item-label header>Virtual Machines</q-item-label>
       <q-item clickable v-ripple>
         <q-item-section avatar>
