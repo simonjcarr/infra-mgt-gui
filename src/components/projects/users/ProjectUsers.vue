@@ -1,7 +1,7 @@
 <template lang="">
   <div>
-    <q-scroll-area style="height: 200px; min-height: 250px">
-      <q-list bordered>
+    <q-scroll-area style="height: 250px;">
+      <q-list bordered style="min-height: 250px">
       <q-item-label header>Project Users</q-item-label>
       <q-item clickable v-ripple v-for="user in getActiveProject.users" :key="user._id">
         <q-item-section avatar>
