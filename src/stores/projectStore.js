@@ -5,7 +5,7 @@ export const useProjectStore = defineStore('project', {
     userProjects: [],
     allProjects: [],
     activeProjectId: null,
-    maxCpu: 20,
+
     maxRam: 128,
     maxDisk: 5000,
     usedCpu: 9,
@@ -14,6 +14,7 @@ export const useProjectStore = defineStore('project', {
   }),
   getters: {
     getActiveProject () {
+      console.log(this.activeProjectId)
       return this.userProjects.find(p => p._id === this.activeProjectId)
     }
   },

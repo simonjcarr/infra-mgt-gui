@@ -13,7 +13,7 @@
     >
     {{ramUsedPercent}}%
     </q-circular-progress>
-    <div>Total: {{maxRam}} | Used: {{ usedRam }}</div>
+    <div>Total: {{activeProject.maxRam}} | Used: {{ usedRam }}</div>
   </div>
 </template>
 <script>
@@ -22,23 +22,24 @@ import { storeToRefs } from 'pinia'
 export default {
   setup() {
     const store = useProjectStore()
-    const { activeProjectId, getActiveProject, maxCpu, maxRam, maxDisk, usedCpu, usedRam, useDisk } = storeToRefs(store)
-    let ramUsedPercent = usedRam.value / maxRam.value * 100
+    const { activeProjectId, getActiveProject, maxDisk, usedCpu, usedRam, useDisk } = storeToRefs(store)
+    const activeProject = getActiveProject.value
+
+    let ramUsedPercent = Math.round(usedRam.value / activeProject.maxRam * 100)
     return {
       activeProjectId,
       getActiveProject,
-      maxCpu,
-      maxRam,
       maxDisk,
       usedCpu,
       usedRam,
       useDisk,
       value: 0,
-      ramUsedPercent
+      ramUsedPercent,
+      activeProject
     }
   }
 }
 </script>
 <style lang="">
-  
+
 </style>

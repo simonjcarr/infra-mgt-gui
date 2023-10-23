@@ -13,7 +13,7 @@
     >
     {{cpuUsedPercent}}%
     </q-circular-progress>
-    <div>Total: {{maxCpu}} | Used: {{ usedCpu }}</div>
+    <div>Total: {{activeProject.maxCpu}} | Used: {{ usedCpu }}</div>
   </div>
 </template>
 <script>
@@ -23,7 +23,10 @@ export default {
   setup() {
     const store = useProjectStore()
     const { activeProjectId, getActiveProject, maxCpu, maxRam, maxDisk, usedCpu, usedRam, useDisk } = storeToRefs(store)
-    let cpuUsedPercent = usedCpu.value / maxCpu.value * 100
+    const activeProject = getActiveProject.value
+
+
+    let cpuUsedPercent = Math.round(usedCpu.value / activeProject.maxCpu * 100)
     return {
       activeProjectId,
       getActiveProject,
@@ -34,11 +37,12 @@ export default {
       usedRam,
       useDisk,
       value: 0,
-      cpuUsedPercent
+      cpuUsedPercent,
+      activeProject
     }
   }
 }
 </script>
 <style lang="">
-  
+
 </style>

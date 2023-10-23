@@ -13,7 +13,7 @@
     >
     {{diskUsedPercent}}%
     </q-circular-progress>
-    <div>Total: {{maxDisk}} GB | Used: {{ usedDisk }} GB</div>
+    <div>Total: {{activeProject.maxDisk}} GB | Used: {{ usedDisk }} GB</div>
   </div>
 </template>
 <script>
@@ -23,7 +23,8 @@ export default {
   setup() {
     const store = useProjectStore()
     const { activeProjectId, getActiveProject, maxCpu, maxRam, maxDisk, usedCpu, usedRam, usedDisk } = storeToRefs(store)
-    let diskUsedPercent = usedDisk.value / maxDisk.value * 100
+    const activeProject = getActiveProject.value
+    let diskUsedPercent = Math.round(usedDisk.value / activeProject.maxDisk * 100)
     return {
       activeProjectId,
       getActiveProject,
@@ -34,11 +35,12 @@ export default {
       usedRam,
       usedDisk,
       value: 0,
-      diskUsedPercent
+      diskUsedPercent,
+      activeProject
     }
   }
 }
 </script>
 <style lang="">
-  
+
 </style>
