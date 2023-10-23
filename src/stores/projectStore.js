@@ -25,6 +25,17 @@ export const useProjectStore = defineStore('project', {
         this.userProjects = data
       })
     },
+    async storeProject(project) {
+      fetch('http://localhost:3000/project', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(project)
+      }).then(response => {
+        return response.json()
+      })
+    },
     setActiveProject(id) {
       this.activeProjectId = id
     },

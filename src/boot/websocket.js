@@ -1,5 +1,12 @@
 import { useProjectStore } from 'stores/projectStore'
+import { useUserStore } from 'stores/userStore'
 export default async ({ app, router, store }) => {
+  const projectStore = useProjectStore()
+  const userStore = useUserStore()
+
+  userStore.getUsers()
+  projectStore.getProjects()
+
   console.log('websocket boot file')
   let ws
   if (!!ws) {
@@ -17,7 +24,6 @@ export default async ({ app, router, store }) => {
     const collection = message.collection
     switch (collection) {
       case "project":
-        const projectStore = useProjectStore()
         switch (operation) {
           case "insert":
             projectStore.addProject(data)
@@ -32,7 +38,20 @@ export default async ({ app, router, store }) => {
             break;
         }
         break;
-    
+      case "user":
+        switch (operation) {
+          case "insert":
+            userStore.addUser(data)
+            break;
+          case "delete":
+            userStore.removeUser(data)
+            break;
+          case "update":
+            userStore.updateUser(data)
+            break;
+          default:
+            break;
+        }
       default:
         break;
     }

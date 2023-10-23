@@ -4,9 +4,11 @@
       <div class="row">
         <div class="col-6">
           <ProjectList />
-          <div class="flex">
-            <q-btn color="primary" class="q-mt-xs" size="sm" icon="add" label="New Project" />
-            <q-btn v-if="activeProjectId" color="primary" class="q-mt-xs q-ml-xs" size="sm" icon="dashboard" label="Project Dashboard" @click="projectDashboardClick" />
+          <div class="flex q-mt-xs">
+            <span>
+              <ProjectCreate />
+            </span>
+            <q-btn v-if="activeProjectId" color="primary" class="q-ml-xs" size="sm" icon="dashboard" label="Project Dashboard" @click="projectDashboardClick" />
           </div>
         </div>
         <div class="col-6">
@@ -25,11 +27,13 @@ import { storeToRefs } from 'pinia'
 import { defineComponent } from 'vue'
 import ProjectList from '../components/projects/ProjectList.vue'
 import VirtualMachineList from '../components/virtualMachines/VirtualMachineList.vue'
+import ProjectCreate from '../components/projects/ProjectCreate.vue'
 export default defineComponent({
   name: 'IndexPage',
   components: {
     ProjectList,
-    VirtualMachineList
+    VirtualMachineList,
+    ProjectCreate
   },
   setup() {
     const store = useProjectStore()
@@ -45,7 +49,7 @@ export default defineComponent({
       this.$router.push('/project')
     }
   }
-  
-  
+
+
 })
 </script>

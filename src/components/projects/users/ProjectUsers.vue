@@ -7,25 +7,33 @@
           <q-img src="user.png" />
         </q-item-section>
 
-        <q-item-section>{{user.name}}</q-item-section>
+        <q-item-section>{{getUserById(user._id).name}}</q-item-section>
       </q-item>
     </q-list>
   </div>
 </template>
 <script>
 import {useProjectStore} from '../../../stores/projectStore'
+import {useUserStore} from '../../../stores/userStore'
 import { storeToRefs } from 'pinia'
+import { computed } from "vue";
 export default {
   setup() {
-    const store = useProjectStore()
-    const { activeProjectId, getActiveProject } = storeToRefs(store)
+    const projectStore = useProjectStore()
+    const userStore = useUserStore()
+    const { activeProjectId, getActiveProject } = storeToRefs(projectStore)
+    const getUserById = (id) => {
+      const user = userStore.getUser(id)
+      return user
+    }
     return {
       activeProjectId,
-      getActiveProject
+      getActiveProject,
+      getUserById
     }
   }
 }
 </script>
 <style lang="">
-  
+
 </style>
