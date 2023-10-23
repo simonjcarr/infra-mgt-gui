@@ -53,6 +53,11 @@ export const useProjectStore = defineStore('project', {
           this.userProjects[i] = project
         }
       })
+    },
+    updateProjectName (name) {
+      const project = this.getActiveProject
+      project.name = name
+      this.storeProject(project)
     }
   }
 })
