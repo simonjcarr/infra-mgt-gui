@@ -8,6 +8,18 @@ export const useVmStore = defineStore('vm', {
   getters: {
     getActiveVM () {
       return this.allVms.find(p => p._id === this.activeVmId)
+    },
+    getVmById() {
+      return (id) => {
+        return this.allVms.find(p => p._id === id)
+      }
+    },
+    getVmsByProjectId () {
+      return async (projectId) => {
+        console.log("pid", projectId)
+        console.log("vms", this.allVms)
+        return this.allVms.filter(p => p.project === projectId)
+      }
     }
   },
   actions: {
@@ -35,7 +47,7 @@ export const useVmStore = defineStore('vm', {
         }
       })
     },
-    createVm (vm) {
+    storeVm (vm) {
       fetch('http://localhost:3000/vm', {
         method: 'POST',
         headers: {

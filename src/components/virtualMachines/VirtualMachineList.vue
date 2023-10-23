@@ -1,55 +1,62 @@
 <template lang="">
-  <q-list bordered class="rounded-borders" style="max-width: 450px; min-height: 200px">
-      <q-item-label header>Virtual Machines</q-item-label>
-      <q-item clickable v-ripple>
+  <q-list bordered class="rounded-borders" style="min-height: 200px">
+      <q-item-label header>Project Virtual Machines</q-item-label>
+      <q-item clickable v-ripple v-for="vm in projectVms" :key="vm._id">
         <q-item-section avatar>
           <q-avatar>
-            <img src="redhat.png">
+            <img :src="getOsImage(vm.osFamily)">
           </q-avatar>
         </q-item-section>
 
         <q-item-section>
-          <q-item-label lines="1">Brunch this weekend?</q-item-label>
+          <q-item-label lines="1">{{vm.name}}</q-item-label>
           <q-item-label caption lines="2">
-            <span class="text-weight-bold">Janet</span>
-            -- I'll be in your neighborhood doing errands this
-            weekend. Do you want to grab brunch?
+            <span class="text-weight-bold">{{vm.hostname}}</span>
+            -- {{vm.description}}
           </q-item-label>
-        </q-item-section>
-
-        <q-item-section side top>
-          1 min ago
-        </q-item-section>
-      </q-item>
-
-      <q-separator inset="item" />
-
-      <q-item clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar>
-            <img src="ubuntu.png">
-          </q-avatar>
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label lines="1">Linear Project</q-item-label>
-          <q-item-label caption lines="2">
-            <span class="text-weight-bold">John</span>
-            -- Can we schedule a call for tomorrow?
-          </q-item-label>
-        </q-item-section>
-
-        <q-item-section side top>
-          1 min ago
         </q-item-section>
       </q-item>
     </q-list>
 </template>
 <script>
+import { useProjectStore } from "../../stores/projectStore";
+import { useVmStore } from "../../stores/vmStore";
+import { storeToRefs } from "pinia";
+import { ref } from "vue";
 export default {
-  
-}
+  setup() {
+    const projectStore = useProjectStore();
+    const { projects, getActiveProject, activeProjectId } = storeToRefs(projectStore);
+
+    const vmStore = useVmStore();
+    vmStore.getVms()
+    const { activeVmId, getVmsByProjectId} = storeToRefs(vmStore);
+    const activeVm = vmStore.getActiveVM;
+    let projectVms = ref([]);
+    (async () => {
+      projectVms.value = await getVmsByProjectId.value(activeProjectId.value);
+
+    })()
+
+
+
+    const getOsImage = (osFamily) => {
+      if (osFamily === "redhat") {
+        return "redhat.png";
+      } else if (osFamily === "ubuntu") {
+        return "ubuntu.png";
+      } else if (osFamily === "windows") {
+        return "windows.png";
+      } else {
+        return "linux.png";
+      }
+    };
+    return {
+      getOsImage,
+      activeVmId,
+      projectVms
+    };
+  },
+};
 </script>
-<style lang="">
-  
-</style>
+//       maxCpu: 0,
