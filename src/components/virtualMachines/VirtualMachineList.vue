@@ -1,10 +1,11 @@
 <template lang="">
   <q-list bordered class="rounded-borders" style="min-height: 200px">
-      <q-item-label header>Project Virtual Machines</q-item-label>
+      <q-item-label header>Project Virtual Machines <VMCreate /></q-item-label>
+
       <q-item clickable v-ripple v-for="vm in projectVms" :key="vm._id" @click="setActiveVmClick(vm._id)">
         <q-item-section avatar>
           <q-avatar>
-            <img :src="getOsImage(vm.osFamily)">
+            <img :src="getOsImage(vm.os.osFamily)">
           </q-avatar>
         </q-item-section>
 
@@ -19,6 +20,7 @@
     </q-list>
 </template>
 <script>
+import VMCreate from "./VMCreate.vue";
 import { useProjectStore } from "../../stores/projectStore";
 import { useVmStore } from "../../stores/vmStore";
 import { storeToRefs } from "pinia";
@@ -49,6 +51,9 @@ export default {
       projectVms,
       setActiveVmClick,
     };
+  },
+  components: {
+    VMCreate,
   },
 };
 </script>

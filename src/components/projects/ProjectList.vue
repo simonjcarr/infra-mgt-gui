@@ -7,12 +7,15 @@
           <q-item-label lines="1">{{project.name}}</q-item-label>
           <q-item-label class="text-black text-caption">{{formatDate(project.createdAt)}}</q-item-label>
         </q-item-section>
+        <q-item-section>
+          <q-item-label>{{getProjectVmCount(project._id)}} VM's</q-item-label>
+        </q-item-section>
         <q-item-section side>
           <q-tooltip>
             No Errors Detected
           </q-tooltip>
           <q-icon name="info" color="green"/>
-          
+
         </q-item-section>
 
       </q-item>
@@ -22,6 +25,7 @@
 
 <script>
 import { useProjectStore } from '../../stores/projectStore'
+import { useVmStore } from '../../stores/vmStore'
 import { storeToRefs } from 'pinia';
 import moment from 'moment'
 export default {
@@ -29,24 +33,30 @@ export default {
     formatDate(date) {
       return moment(date).format('DD/MM/YYYY')
     },
-    
-    
+
+
   },
   setup() {
-    const store = useProjectStore()
-    const { userProjects, activeProjectId, getActiveProject } = storeToRefs(store)
+    const projectStore = useProjectStore()
+    const { userProjects, activeProjectId, getActiveProject } = storeToRefs(projectStore)
+
+    const vmStore = useVmStore()
+    const { getProjectVmCount } = storeToRefs(vmStore)
+
+
 
     const setActiveProject = (projectId) => {
-      store.setActiveProject(projectId)
+      projectStore.setActiveProject(projectId)
     }
 
-    store.getProjects()
+    projectStore.getProjects()
 
     return {
       userProjects,
       activeProjectId,
       setActiveProject,
-      getActiveProject
+      getActiveProject,
+      getProjectVmCount
     }
   }
 

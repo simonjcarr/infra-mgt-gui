@@ -4,6 +4,10 @@ export const useVmStore = defineStore("vm", {
   state: () => ({
     allVms: [],
     activeVmId: null,
+    osOptions: [
+      { os: "Ubuntu 20.04", osFamily: "ubuntu", diskSize: 250 },
+      { os: "RedHat 8", osFamily: "redhat", diskSize: 250 },
+    ]
   }),
   getters: {
     getActiveVM() {
@@ -12,6 +16,11 @@ export const useVmStore = defineStore("vm", {
     getVmById() {
       return (id) => {
         return this.allVms.find((p) => p._id === id);
+      };
+    },
+    getProjectVmCount() {
+      return (projectId) => {
+        return this.allVms.filter((p) => p.project === projectId).length;
       };
     },
     getVmsByProjectId() {
@@ -62,20 +71,16 @@ export const useVmStore = defineStore("vm", {
         }
       });
     },
-    storeVm(vm) {
-      fetch("http://localhost:3000/vm", {
-        method: "POST",
+    async storeVm(vm) {
+      fetch('http://localhost:3000/vm', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(vm),
+        body: JSON.stringify(vm)
+      }).then(response => {
+        return response.json()
       })
-        .then((response) => {
-          return response.json();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     },
   },
 });

@@ -15,8 +15,8 @@
       </q-item-section>
       <q-item-section>
         <div class="flex">
-          <q-img style="width: 20px" :src="getOsImage(getActiveVM.osFamily)" class="q-mr-sm" />
-          <q-item-label lines="1" class="text-uppercase">{{getActiveVM.osFamily}}</q-item-label>
+          <q-img style="width: 20px" :src="getOsImage(getActiveVM.os.osFamily)" class="q-mr-sm" />
+          <q-item-label lines="1" class="text-uppercase">{{getActiveVM.os.osFamily}}</q-item-label>
         </div>
       </q-item-section>
     </q-item>
