@@ -13,7 +13,7 @@
     >
     {{ramUsedPercent}}%
     </q-circular-progress>
-    <div>Total: {{activeProject.maxRam}} | Used: {{ usedRam }}</div>
+    <div>Capacity: {{activeProject.maxRam}} | Used: {{ usedRam }}</div>
   </div>
 </template>
 <script>

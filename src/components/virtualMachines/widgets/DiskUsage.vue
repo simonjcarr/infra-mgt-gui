@@ -13,7 +13,7 @@
     >
     {{diskUsedPercent}}%
     </q-circular-progress>
-    <div>Total: {{activeProject.maxDisk}} GB | Used: {{ usedDisk }} GB</div>
+    <div>Capacity: {{activeProject.maxDisk}} GB | Used: {{ usedDisk }} GB</div>
   </div>
 </template>
 <script>

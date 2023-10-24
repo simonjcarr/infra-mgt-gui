@@ -13,7 +13,7 @@
     >
     {{cpuUsedPercent}}%
     </q-circular-progress>
-    <div>Total: {{activeProject.maxCpu}} | Used: {{ usedCpu }}</div>
+    <div>Capacity: {{activeProject.maxCpu}} | Used: {{ usedCpu }}</div>
   </div>
 </template>
 <script>
