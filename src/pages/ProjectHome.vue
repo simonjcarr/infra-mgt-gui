@@ -44,6 +44,9 @@
     <div class="col-4">
       <VirtualMachineList />
     </div>
+    <div class="col-8">
+      <VirtualMachineDetail />
+    </div>
   </div>
 </template>
 <script>
@@ -53,6 +56,7 @@ import DiskUsage from '../components/virtualMachines/widgets/DiskUsage.vue'
 import ProjectUsers from '../components/projects/users/ProjectUsers.vue'
 import ProjectAdminUsers from 'src/components/projects/users/ProjectAdminUsers.vue'
 import VirtualMachineList from 'src/components/virtualMachines/VirtualMachineList.vue'
+import VirtualMachineDetail from 'src/components/virtualMachines/VirtualMachineDetail.vue'
 import { ref } from 'vue'
 import { useProjectStore } from 'src/stores/projectStore'
 import { storeToRefs } from 'pinia'
@@ -89,7 +93,8 @@ export default {
     DiskUsage,
     ProjectUsers,
     ProjectAdminUsers,
-    VirtualMachineList
+    VirtualMachineList,
+    VirtualMachineDetail
   }
 }
 </script>
