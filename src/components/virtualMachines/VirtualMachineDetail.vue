@@ -1,5 +1,6 @@
 <template lang="">
   <q-list dense bordered v-if="getActiveVM">
+    <q-item-label header>Virtual Machine Detail</q-item-label>
     <q-item>
       <q-item-section>
         <q-item-label lines="1">Name</q-item-label>
