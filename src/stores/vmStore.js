@@ -24,7 +24,7 @@ export const useVmStore = defineStore("vm", {
       };
     },
     getVmsByProjectId() {
-      return async (projectId) => {
+      return (projectId) => {
         console.log("pid", projectId);
         console.log("vms", this.allVms);
         return this.allVms.filter((p) => p.project === projectId);
@@ -61,6 +61,7 @@ export const useVmStore = defineStore("vm", {
       this.allVms.push(vm);
     },
     removeVm(id) {
+      console.log(id)
       this.allVms = this.allVms.filter((p) => p._id !== id);
     },
     updateVm(vm) {
@@ -71,7 +72,8 @@ export const useVmStore = defineStore("vm", {
         }
       });
     },
-    async storeVm(vm) {
+    storeVm(vm) {
+      console.log("store", JSON.stringify(vm))
       fetch('http://localhost:3000/vm', {
         method: 'POST',
         headers: {

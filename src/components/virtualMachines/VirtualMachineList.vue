@@ -1,8 +1,8 @@
 <template lang="">
   <q-list bordered class="rounded-borders" style="min-height: 200px">
-      <q-item-label header>Project Virtual Machines <VMCreate /></q-item-label>
+      <q-item-label header>Project Virtual Machines ({{getProjectVmCount(activeProjectId)}}) <VMCreate /></q-item-label>
 
-      <q-item clickable v-ripple v-for="vm in projectVms" :key="vm._id" @click="setActiveVmClick(vm._id)">
+      <q-item clickable v-ripple v-for="vm in getVmsByProjectId(activeProjectId)" :key="vm._id" @click="setActiveVmClick(vm._id)">
         <q-item-section avatar>
           <q-avatar>
             <img :src="getOsImage(vm.os.osFamily)">
@@ -32,13 +32,13 @@ export default {
 
     const vmStore = useVmStore();
     vmStore.getVms()
-    const { activeVmId, getVmsByProjectId, getOsImage} = storeToRefs(vmStore);
+    const { activeVmId, getVmsByProjectId, getOsImage, getProjectVmCount} = storeToRefs(vmStore);
 
-    let projectVms = ref([]);
-    (async () => {
-      projectVms.value = await getVmsByProjectId.value(activeProjectId.value);
+    // let projectVms = ref([]);
+    // (async () => {
+    //   projectVms.value = await getVmsByProjectId.value(activeProjectId.value);
 
-    })()
+    // })()
 
     const setActiveVmClick = (id) => {
       vmStore.setActiveVm(id);
@@ -48,8 +48,10 @@ export default {
     return {
       getOsImage,
       activeVmId,
-      projectVms,
       setActiveVmClick,
+      getVmsByProjectId,
+      activeProjectId,
+      getProjectVmCount
     };
   },
   components: {
@@ -57,4 +59,4 @@ export default {
   },
 };
 </script>
-//       maxCpu: 0,
+
