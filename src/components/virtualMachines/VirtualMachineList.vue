@@ -1,7 +1,7 @@
 <template lang="">
   <q-list bordered class="rounded-borders" style="min-height: 200px">
       <q-item-label header>Project Virtual Machines</q-item-label>
-      <q-item clickable v-ripple v-for="vm in projectVms" :key="vm._id">
+      <q-item clickable v-ripple v-for="vm in projectVms" :key="vm._id" @click="setActiveVmClick(vm._id)">
         <q-item-section avatar>
           <q-avatar>
             <img :src="getOsImage(vm.osFamily)">
@@ -30,31 +30,24 @@ export default {
 
     const vmStore = useVmStore();
     vmStore.getVms()
-    const { activeVmId, getVmsByProjectId} = storeToRefs(vmStore);
-    const activeVm = vmStore.getActiveVM;
+    const { activeVmId, getVmsByProjectId, getOsImage} = storeToRefs(vmStore);
+
     let projectVms = ref([]);
     (async () => {
       projectVms.value = await getVmsByProjectId.value(activeProjectId.value);
 
     })()
 
-
-
-    const getOsImage = (osFamily) => {
-      if (osFamily === "redhat") {
-        return "redhat.png";
-      } else if (osFamily === "ubuntu") {
-        return "ubuntu.png";
-      } else if (osFamily === "windows") {
-        return "windows.png";
-      } else {
-        return "linux.png";
-      }
+    const setActiveVmClick = (id) => {
+      vmStore.setActiveVm(id);
     };
+
+
     return {
       getOsImage,
       activeVmId,
-      projectVms
+      projectVms,
+      setActiveVmClick,
     };
   },
 };
