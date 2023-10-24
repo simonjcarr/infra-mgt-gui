@@ -19,20 +19,22 @@
 <script>
 import { useProjectStore} from '../../../stores/projectStore'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 export default {
   setup() {
     const store = useProjectStore()
-    const { activeProjectId, getActiveProject, maxDisk, usedCpu, usedRam, useDisk } = storeToRefs(store)
+    const { activeProjectId, getActiveProject, maxDisk, getProjectUsedResource } = storeToRefs(store)
     const activeProject = getActiveProject.value
+
+    let usedRam = ref(0)
+    usedRam.value = getProjectUsedResource.value(activeProjectId.value).usedRam
 
     let ramUsedPercent = Math.round(usedRam.value / activeProject.maxRam * 100)
     return {
       activeProjectId,
       getActiveProject,
       maxDisk,
-      usedCpu,
       usedRam,
-      useDisk,
       value: 0,
       ramUsedPercent,
       activeProject

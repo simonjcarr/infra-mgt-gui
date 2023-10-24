@@ -19,12 +19,14 @@
 <script>
 import { useProjectStore} from '../../../stores/projectStore'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 export default {
   setup() {
     const store = useProjectStore()
-    const { activeProjectId, getActiveProject, maxCpu, maxRam, maxDisk, usedCpu, usedRam, useDisk } = storeToRefs(store)
+    const { activeProjectId, getActiveProject, maxCpu, maxRam, maxDisk, getProjectUsedResource } = storeToRefs(store)
     const activeProject = getActiveProject.value
-
+    let usedCpu = ref(0)
+    usedCpu.value = getProjectUsedResource.value(activeProjectId.value).usedCpu
 
     let cpuUsedPercent = Math.round(usedCpu.value / activeProject.maxCpu * 100)
     return {
@@ -34,8 +36,6 @@ export default {
       maxRam,
       maxDisk,
       usedCpu,
-      usedRam,
-      useDisk,
       value: 0,
       cpuUsedPercent,
       activeProject

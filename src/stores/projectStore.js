@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useVmStore } from './vmStore'
 
 export const useProjectStore = defineStore('project', {
   state: () => ({
@@ -14,8 +15,27 @@ export const useProjectStore = defineStore('project', {
   }),
   getters: {
     getActiveProject () {
-      console.log(this.activeProjectId)
       return this.userProjects.find(p => p._id === this.activeProjectId)
+    },
+    getProjectUsedResource () {
+      return (projectId) => {
+        // import the vm store
+        const vmStore = useVmStore()
+
+        // loop through all vms and sum their cpu usage
+        let usedCpu = 0
+        let usedRam = 0
+        let usedDisk = 0
+        const getVms = vmStore.getVmsByProjectId
+        vmStore.allVms.forEach(vm => {
+          if (vm.project === projectId) {
+            usedCpu += vm.cpu
+            usedRam += vm.ram
+            usedDisk += vm.disk
+          }
+        })
+        return { usedCpu, usedRam, usedDisk }
+      }
     }
   },
   actions: {
